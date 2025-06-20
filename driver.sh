@@ -4,11 +4,11 @@ patchSize=80
 numPatches=10
 ECH=1
 COV=1
-MASKP=0.95
+MASKP=0.9
 
 storePathPrefix=output/mask_"$MASKP"
 
-for i in {0..0};
+for i in {0..9};
 do
   echo "Submitting Job with: patchSize $patchSize numPatches $numPatches ECH $ECH, COV $COV, MASKP $MASKP Seed $i ..."
 

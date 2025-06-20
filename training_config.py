@@ -50,7 +50,7 @@ class TrainingConfig:
     learning_rate: float = 1e-3
     lr_update_step_size: int = 5
     lr_scheduler_factor: float = 0.5
-    lr_scheduler_patience: int = 4
+    lr_scheduler_patience: int = 3
     
     context_length: int = 12 # 4, 8, 12, 16, 20
 
@@ -61,7 +61,7 @@ class TrainingConfig:
     num_channels: int = 3
     add_data_mask_channel: bool = True
     add_elevation_channel: bool = True
-    use_covariate_embedding: bool = False
+    use_covariate_embedding: bool = True
     use_patch_embedding: bool = False
     
     spatial_embedding_size: int = 64  # 16: 32, 32: 32, 64: 32, 80: 64, 96: 96, 128: 128, 228: 128
@@ -71,7 +71,7 @@ class TrainingConfig:
     covariate_dimension: int = 4
 
     consistency_loss_weight: float = 0  # 0.25
-    data_missing_percentage: float = 0.95
+    data_missing_percentage: float = 0.9
 
     num_test_masks: int = 10
     test_masks: str = f'data/masks_{patch_size}_{data_missing_percentage}_{num_test_masks}.pt'

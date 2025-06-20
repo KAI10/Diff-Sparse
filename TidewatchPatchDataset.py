@@ -170,23 +170,22 @@ class MultiPatchDataset(Dataset):
         Returns:
             A (D, D) numpy array (int8) representing the missing data mask M.
         """
-        # assert 0 <= p <= 1
+        assert 0 <= p <= 1
 
-        # # Create a random matrix of the same shape as land_mask with values in [0, 1)
-        # random_chance_matrix = torch.rand(*land_mask.shape)
+        # Create a random matrix of the same shape as land_mask with values in [0, 1)
+        random_chance_matrix = torch.rand(*land_mask.shape)
 
-        # # Initialize the missing mask:
-        # # - Sea cells (land_mask == 0) are always 0 (missing/irrelevant).
-        # # - Land cells (land_mask == 1) are initially considered observed (1).
-        # data_mask = land_mask.clone().detach()
+        # Initialize the missing mask:
+        # - Sea cells (land_mask == 0) are always 0 (missing/irrelevant).
+        # - Land cells (land_mask == 1) are initially considered observed (1).
+        data_mask = land_mask.clone().detach()
 
-        # # Identify land cells that should be masked based on the probability
-        # # Condition for masking a land cell: (it is land) AND (its random chance is less than the probability)
-        # condition_to_mask_land_cell = (land_mask == 1) & (random_chance_matrix < p)
+        # Identify land cells that should be masked based on the probability
+        # Condition for masking a land cell: (it is land) AND (its random chance is less than the probability)
+        condition_to_mask_land_cell = (land_mask == 1) & (random_chance_matrix < p)
 
-        # # Set these selected land cells to 0 (missing)
-        # data_mask[condition_to_mask_land_cell] = 0
-        # # print(f"Percentage masked: {data_mask.sum()*100 / land_mask.sum()}")
+        # Set these selected land cells to 0 (missing)
+        data_mask[condition_to_mask_land_cell] = 0
+        # print(f"Percentage masked: {data_mask.sum()*100 / land_mask.sum()}")
 
-        # return data_mask
-        return land_mask.clone().detach()
+        return data_mask

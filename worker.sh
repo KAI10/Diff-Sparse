@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -A nssac_students
 #SBATCH -p bii-gpu
-#SBATCH --mem=64G
+#SBATCH --mem=72G
 #SBATCH --gres=gpu:1
 #SBATCH -c 8
 #SBATCH -t 10:00:00
