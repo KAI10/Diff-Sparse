@@ -50,12 +50,11 @@ class HiddenStateNet(nn.Module):
         # self.input_channel = 2 if config.add_elevation_channel else 1
         self.input_channel = config.num_channels
 
-        # self.d1 = DownSampleBlock(self.input_channel, 8, kernel_size=(1, 3, 3), num_groups=8) # For patch size 16
+        # self.d1 = DownSampleBlock(self.input_channel, 64, kernel_size=(1, 3, 3), num_groups=16) # For patch size 16
         self.d1 = DownSampleBlock(self.input_channel, 16, kernel_size=(1, 3, 3), num_groups=8)
         self.d2 = DownSampleBlock(16, 32, kernel_size=(1, 3, 3), num_groups=8)
         self.d3 = DownSampleBlock(32, 64, kernel_size=(1, 3, 3), num_groups=8)
         
-        # self.output = nn.Conv3d(8, 1, kernel_size=(1, 1, 1)) # For patch size 16
         self.output = nn.Conv3d(64, 1, kernel_size=(1, 1, 1))
         self.linear = nn.Linear(self.linear_layer_size, self.spatial_embedding_size)
         

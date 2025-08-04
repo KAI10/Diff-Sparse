@@ -4,7 +4,7 @@ from datetime import datetime
 
 @dataclass
 class TrainingConfig:
-    patch_size: int = 80
+    patch_size: int = 64
     train_batch_size: int = 32
     eval_batch_size: int = 4
     num_unique_patches: int = 10
@@ -38,7 +38,7 @@ class TrainingConfig:
     # Number of samples for 1 patch: 157, 2 patches: 157 * 2 = 314, 5 patches: 157 * 5 = 785, 10 patches: 157 * 10 = 1570, 20 patches: 157 * 20 = 3140
     # Number of batches for 1 patch: 157 / 4 = 39.25, 2 patches: 314 / 4 = 78.5, 5 patches: 785 / 4 = 196.25, 10 patches: 1570 / 4 = 392.5, 20 patches: 3140 / 4 = 785
 
-    # Validate using 1 or 2 Day(s) of Data
+    # Validate using 1 or 2 or 4 Day(s) of Data
     num_val_batches: int = 33
 
     num_scenarios_validation: int = 2
@@ -56,7 +56,7 @@ class TrainingConfig:
 
     training_horizon_length: int = 1
     validation_horizon_length: int = 12
-    test_horizon_length: int = 12
+    test_horizon_length: int = 12  # 1, 4, 12, 20, 28, 36
 
     num_channels: int = 3
     add_data_mask_channel: bool = True
@@ -64,14 +64,14 @@ class TrainingConfig:
     use_covariate_embedding: bool = True
     use_patch_embedding: bool = False
     
-    spatial_embedding_size: int = 64  # 16: 32, 32: 32, 64: 32, 80: 64, 96: 96, 128: 128, 228: 128
-    linear_layer_size: int = 36 # 16: 36, 32: 25, 64: 16, 80: 36, 96: 64, 128: 144, 228: 625
+    spatial_embedding_size: int = 32  # 16: 32, 32: 32, 64: 32, 80: 64, 96: 96, 128: 128, 228: 128
+    linear_layer_size: int = 16 # 16: 36, 32: 25, 64: 16, 80: 36, 96: 64, 128: 144, 228: 625
     dropout: float = 0 # 0.25
     
     covariate_dimension: int = 4
 
     consistency_loss_weight: float = 0  # 0.25
-    data_missing_percentage: float = 0.9
+    data_missing_percentage: float = 0.95
 
     num_test_masks: int = 10
     test_masks: str = f'data/masks_{patch_size}_{data_missing_percentage}_{num_test_masks}.pt'

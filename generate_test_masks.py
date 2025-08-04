@@ -17,7 +17,7 @@ def generate_mask(p, mask_size):
         M (mask_size, mask_size) array representing the missing data mask M.
     """
     assert 0 <= p <= 1
-    mask = torch.ones(mask_size, mask_size)
+    mask = torch.ones(mask_size, mask_size, dtype=torch.int8)
     condition_to_mask = torch.rand(mask_size, mask_size) < p
     mask[condition_to_mask] = 0
     return mask
@@ -29,6 +29,7 @@ if __name__ == "__main__":
 
     mask_sizes = [16, 32, 64, 80, 96]
     ps = [0, 0.25, 0.50, 0.75, 0.9, 0.95]
+    # ps = [1]
     number_of_masks = 10
 
     for p in ps:

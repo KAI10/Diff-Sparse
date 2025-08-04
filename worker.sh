@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -A nssac_students
+#SBATCH -A bii_nssac
 #SBATCH -p bii-gpu
-#SBATCH --mem=72G
+#SBATCH --mem=64G
 #SBATCH --gres=gpu:1
 #SBATCH -c 8
-#SBATCH -t 10:00:00
+#SBATCH -t 06:00:00
 
 module load miniforge
 conda activate pytorch-venv

@@ -184,6 +184,14 @@ class LightningDiffusionModel(LightningModule):
         self.log("test_masked_nacrps", masked_nacrps, prog_bar=True)
         self.log("test_masked_nrmse", masked_nrmse, prog_bar=True)
 
+        # Reset Metrics
+        self.test_masked_crps = 0
+        self.test_masked_gt_abs_sum = 0
+
+        self.test_masked_squared_error = 0
+        self.test_masked_gt_num = 0
+        self.test_masked_gt_min, self.test_masked_gt_max = 1e9, -1e9
+
     def process_validation_test_batch(self, batch, batch_idx, mode):
         context, covariate, horizon, horizon_mask = batch
 

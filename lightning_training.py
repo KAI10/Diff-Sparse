@@ -26,6 +26,8 @@ from lightning_diffusion import LightningDiffusionModel
 import argparse
 import pickle
 
+from torch.utils.data import Dataset, Subset
+
 
 def get_train_dataset(config, patch_origins):
     train_dataset = TidewatchTimeseriesDataset(
@@ -110,10 +112,12 @@ def get_conditional_unet(config):
         in_channels=1,  # the number of input channels
         out_channels=1,  # the number of output channels
         layers_per_block=2,  # how many ResNet layers to use per UNet block,
+        norm_num_groups=16,
+        block_out_channels=(16, 32, 32, 64),
+        # norm_num_groups=8,
+        # block_out_channels=(8, 16, 32, 32),
         # norm_num_groups=16,
-        # block_out_channels=(16, 32, 32, 64),
-        norm_num_groups=8,
-        block_out_channels=(8, 16, 32, 32),
+        # block_out_channels=(16, 16, 32, 32),
         # encoder_hid_dim = 1024,
         cross_attention_dim=config.spatial_embedding_size,
 
@@ -179,6 +183,7 @@ if __name__ == "__main__":
     config.train_mean_elevation = multi_patch_train_dataset.mean_elevation
     config.train_std_elevation = multi_patch_train_dataset.std_elevation
     json.dump(dataclass_to_dict(config), open(f"{config.store_path}/config.json", 'w'), default=str)
+    # json.dump(dataclass_to_dict(config), open(f"{config.store_path}/config_test_{config.test_horizon_length}.json", 'w'), default=str)
 
     multi_patch_validation_dataset = get_validation_dataset(config, patch_origins, multi_patch_train_dataset)
     val_dataloader = DataLoader(multi_patch_validation_dataset, batch_size=config.eval_batch_size, shuffle=False, num_workers=8)
@@ -241,12 +246,17 @@ if __name__ == "__main__":
     
     ###############  Testing  ###################
     print(f"Best model path: {checkpoint_callback.best_model_path}")
-    trainer.test(ckpt_path="best", dataloaders=test_dataloader)
-
     trainer.test(
         # model,
         # ckpt_path=f"{config.store_path}/best.ckpt",
         ckpt_path="best",
         dataloaders=test_dataloader
     )
+
+    # print(f"Best model path: {config.store_path}/best.ckpt")
+    # trainer.test(
+    #     model,
+    #     ckpt_path=f"{config.store_path}/best.ckpt",
+    #     dataloaders=test_dataloader
+    # )
     
