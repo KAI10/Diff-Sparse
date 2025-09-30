@@ -8,9 +8,10 @@ MASKP=0.95
 CLOSS=0
 
 # contextLength=12
-horizonLength=60
+# horizonLength=60
 
-storePathPrefix=output/mask_"$MASKP"/large_unet
+storePathPrefix=output/mask_"$MASKP"
+# storePathPrefix=output/zero_mask/mask_"$MASKP"/
 # storePathPrefix=output/mask_"$MASKP"/CLOSS_"$CLOSS"
 
 for i in {0..9};

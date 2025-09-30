@@ -133,8 +133,11 @@ class MultiPatchDataset(Dataset):
             # # Placing 0 in-place of missing data
             # context = context * data_mask
             data_mask_expanded = repeat(data_mask, "h w -> d c h w", d=context.shape[0], c=context.shape[1])
+            
+            # # Place zero where there is no sensor
+            # context = context * data_mask_expanded
+            
             noise_mask = torch.randn(*data_mask_expanded.shape)
-
             # Place random gaussian noise at the missing data
             context = context * data_mask_expanded + ~data_mask_expanded * noise_mask
         
