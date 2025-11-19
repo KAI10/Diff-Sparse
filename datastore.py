@@ -19,16 +19,12 @@ class DataStore:
         root_dir: str,
         start_dt: datetime,
         end_dt: datetime,
-        # min_max_inundation: Union[tuple[float, float], None],
-        # mean_std_inundation: Union[tuple[float, float], None],
         covariate_file: str,
         elevation_file: str
     ):
         self.root_dir = root_dir
         self.start_dt = start_dt
         self.end_dt = end_dt
-        # self.min_max_inundation = min_max_inundation
-        # self.mean_std_inundation = mean_std_inundation
 
         self.td = self.end_dt - self.start_dt
         self.number_of_frames = self.td.days * 24 + self.td.seconds // 3600 + 1
@@ -38,25 +34,26 @@ class DataStore:
         
         self.datamap_name = f"{self.start_dt.strftime('%m-%d-%Y-%H:%M:%S')}_to_" + \
                             f"{self.end_dt.strftime('%m-%d-%Y-%H:%M:%S')}.memmap"
-        # self.datamap_stats_name = f"{self.start_dt.strftime('%m-%d-%Y-%H:%M:%S')}_to_" + \
-        #                           f"{self.end_dt.strftime('%m-%d-%Y-%H:%M:%S')}.json"
+        self.datamap_path = f"{self.root_dir}/{self.datamap_name}"
+
+        if not os.path.isfile(self.datamap_path):
+            print(f"Creating datamap at {self.datamap_path} ...")
+            self.datamap = np.memmap(
+                self.datamap_path,
+                dtype='float32', 
+                mode='w+',
+                shape=(self.number_of_frames, self.height, self.width)
+            )
+            self.save_datamap()
+        else:        
+            self.datamap = np.memmap(
+                self.datamap_path,
+                dtype='float32', 
+                mode='r',
+                shape=(self.number_of_frames, self.height, self.width)
+            )
         
-        self.datamap = np.memmap(
-            f"{self.root_dir}/{self.datamap_name}",
-            dtype='float32', 
-            # mode='w+',
-            mode='r',
-            shape=(self.number_of_frames, self.height, self.width)
-        )
-        # self.save_datamap()
         print(f"datamap shape: {self.datamap.shape}")
-        
-        # self.datamap_stats = json.load(open(f"{self.root_dir}/{self.datamap_stats_name}", 'r'))
-        # self.mean_inundation = self.datamap_stats["mean_inundation"]
-        # self.std_inundation = self.datamap_stats["std_inundation"]
-        # self.inundation_scaler = self.get_inundation_standard_scaler(
-        #     self.mean_inundation, self.std_inundation
-        # )
         
         self.covariate_file = covariate_file
         self.elevation_file = elevation_file
@@ -71,35 +68,6 @@ class DataStore:
             self.datamap[frame_index, :, :] = value
             fetch_dt = fetch_dt + timedelta(hours=1)
             frame_index += 1
-
-        # if self.mean_std_inundation:
-        #     mean_inundation, std_inundation = self.mean_std_inundation
-        # else:    
-        #     print("Calculating mean and std ...")
-        #     mean_inundation, std_inundation = np.nanmean(self.datamap), np.nanstd(self.datamap)
-
-        # print("Setting sea cell values to mean value ...")
-        # self.datamap[:,:,:] = np.nan_to_num(self.datamap, nan=mean_inundation)
-
-        # print("Flusing the datamap ...")
-        # self.datamap.flush()
-
-        # datamap_stats = {
-        #     "mean_inundation": float(mean_inundation),
-        #     "std_inundation": float(std_inundation)
-        # }
-        # json.dump(datamap_stats, open(f"{self.root_dir}/{self.datamap_stats_name}", "w"))
-
-        # print("Normalizing the inundation values ...")
-        # inundation_scaler = self.get_inundation_standard_scaler(mean_inundation, std_inundation)
-        # fetch_dt, frame_index = self.start_dt, 0
-        # while fetch_dt <= self.end_dt:
-        #     print(str(fetch_dt), end='\r')
-        #     value = self.datamap[frame_index, :, :]
-        #     value = inundation_scaler.transform(value.reshape(-1, 1)).reshape(value.shape)
-        #     self.datamap[frame_index, :, :] = value
-        #     fetch_dt = fetch_dt + timedelta(hours=1)
-        #     frame_index += 1
 
         print("Flushing the datamap")
         self.datamap.flush()
@@ -186,16 +154,4 @@ class DataStore:
         }
         json.dump(datamap_stats, open(f"{self.root_dir}/{datamap_stats_name}", "w"))
         return mean_inundation, std_inundation
-
-    
-    # def get_inundation_minmaxscaler(self, min_inundation, max_inundation):
-    #     inundation_minmax = np.array([min_inundation, max_inundation])
-    #     scaler = MinMaxScaler(feature_range=(-1, 1))
-    #     scaler.fit(inundation_minmax.reshape(-1, 1))
-    #     return scaler
-
-    # def get_inundation_standard_scaler(self, mean_inundation, std_inundation):
-    #     scaler = StandardScaler()
-    #     scaler.mean_, scaler.scale_ = mean_inundation, std_inundation
-    #     return scaler
         
