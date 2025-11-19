@@ -75,30 +75,10 @@ class TrainingConfig:
 
     num_test_masks: int = 10
     test_masks: str = f'data/Test-Masks/masks_{patch_size}_{data_missing_percentage}_{num_test_masks}.pt'
-    
-    # num_diffusion_steps: int = 1000
-    # min_beta: float = 10 ** -4
-    # max_beta: float = 0.02
-
-    # num_diffusion_steps: int = 50
-    # min_beta: float = 10 ** -4
-    # max_beta: float = 0.4
 
     num_diffusion_steps: int = 20
     min_beta: float = 10 ** -4
     max_beta: float = 1
-
-    # num_diffusion_steps: int = 100
-    # min_beta: float = 10 ** -4
-    # max_beta: float = 0.2
-
-    # num_diffusion_steps: int = 250
-    # min_beta: float = 10 ** -4
-    # max_beta: float = 0.08
-
-    # num_diffusion_steps: int = 500
-    # min_beta: float = 10 ** -4
-    # max_beta: float = 0.04
     
     save_top_k: int = 2
     store_path: str = ""
