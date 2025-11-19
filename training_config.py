@@ -9,7 +9,7 @@ class TrainingConfig:
     eval_batch_size: int = 4
     num_unique_patches: int = 10
 
-    patch_origins: str = f'data/non_overlapping_patches_{patch_size}.pickle'
+    patch_origins: str = f'data/Patches/non_overlapping_patches_{patch_size}.pickle'
 
     train_start_datetime: datetime = datetime.strptime('03-28-2024-06AM', '%m-%d-%Y-%I%p')
     train_end_datetime: datetime = datetime.strptime('06-17-2024-05PM', '%m-%d-%Y-%I%p')
@@ -74,7 +74,7 @@ class TrainingConfig:
     data_missing_percentage: float = 0.95
 
     num_test_masks: int = 10
-    test_masks: str = f'data/masks_{patch_size}_{data_missing_percentage}_{num_test_masks}.pt'
+    test_masks: str = f'data/Test-Masks/masks_{patch_size}_{data_missing_percentage}_{num_test_masks}.pt'
     
     # num_diffusion_steps: int = 1000
     # min_beta: float = 10 ** -4

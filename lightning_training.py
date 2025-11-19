@@ -31,7 +31,7 @@ from torch.utils.data import Dataset, Subset
 
 def get_train_dataset(config, patch_origins):
     train_dataset = TidewatchTimeseriesDataset(
-        root_dir='/project/biocomplexity/Diff_Spatio_Temporal_Grid/Datasets/Tiff/',
+        root_dir='data/Tiff/',
         start_dt=config.train_start_datetime,
         end_dt=config.train_end_datetime,
         context_length=config.context_length,
@@ -54,7 +54,7 @@ def get_train_dataset(config, patch_origins):
 
 def get_validation_dataset(config, patch_origins, multi_patch_train_dataset):
     validation_dataset = TidewatchTimeseriesDataset(
-        root_dir='/project/biocomplexity/Diff_Spatio_Temporal_Grid/Datasets/Tiff/',
+        root_dir='data/Tiff/',
         start_dt=config.validation_start_datetime,
         end_dt=config.validation_end_datetime,
         context_length=config.context_length,
@@ -81,7 +81,7 @@ def get_validation_dataset(config, patch_origins, multi_patch_train_dataset):
 
 def get_test_dataset(config, patch_origins, test_masks, multi_patch_train_dataset):
     test_dataset = TidewatchTimeseriesDataset(
-        root_dir='/project/biocomplexity/Diff_Spatio_Temporal_Grid/Datasets/Tiff/',
+        root_dir='data/Tiff/',
         start_dt=config.test_start_datetime,
         end_dt=config.test_end_datetime,
         context_length=config.context_length,
@@ -114,11 +114,6 @@ def get_conditional_unet(config):
         layers_per_block=2,  # how many ResNet layers to use per UNet block,
         norm_num_groups=16,
         block_out_channels=(16, 32, 32, 64),
-        # norm_num_groups=8,
-        # block_out_channels=(8, 16, 32, 32),
-        # norm_num_groups=16,
-        # block_out_channels=(16, 16, 32, 32),
-        # encoder_hid_dim = 1024,
         cross_attention_dim=config.spatial_embedding_size,
 
         # class_embed_type='simple_projection',
