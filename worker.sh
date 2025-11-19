@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -A bii_nssac
-#SBATCH -p bii-gpu
+#SBATCH -A <account_name>
+#SBATCH -p <partition_name>
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:1
 #SBATCH -c 8
 #SBATCH -t 06:00:00
 
 module load miniforge
-conda activate pytorch-venv
+conda activate <environment_name>
 
 echo Random Seed: "$seed"
 echo Store path: "$storePath"
