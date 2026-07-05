@@ -212,19 +212,21 @@ Diff-Sparse/
 If you use this code or dataset in your research, please cite:
 
 ```bibtex
-@misc{islam2026diffsparse,
-  doi = {10.48550/ARXIV.2505.05381},
-  url = {https://arxiv.org/abs/2505.05381},
-  author = {Islam,  Kazi Ashik and Mehrab,  Zakaria and Halappanavar,  Mahantesh and Mortveit,  Henning and Katragadda,  Sridhar and Loftis,  Jon Derek and Hoops,  Stefan and Marathe,  Madhav},
-  keywords = {Machine Learning (cs.LG),  FOS: Computer and information sciences},
+@article{islam2026diffsparse,
   title = {Towards High Resolution Probabilistic Coastal Inundation Forecasting from Sparse Observations},
-  publisher = {arXiv},
-  year = {2025},
-  copyright = {Creative Commons Attribution 4.0 International}
+  volume = {40},
+  ISSN = {2159-5399},
+  url = {http://dx.doi.org/10.1609/aaai.v40i45.41203},
+  DOI = {10.1609/aaai.v40i45.41203},
+  number = {45},
+  journal = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  publisher = {Association for the Advancement of Artificial Intelligence (AAAI)},
+  author = {Islam,  Kazi Ashik and Mehrab,  Zakaria and Halappanavar,  Mahantesh M and Mortveit,  Henning and Sridhar,  Katragadda and Loftis,  Jon Derek and Hoops,  Stefan and Marathe,  Madhav},
+  year = {2026},
+  month = Mar,
+  pages = {38607–38615}
 }
 ```
-
-_Updated citation will be posted once the AAAI 2026 proceedings are published._
 
 **Preprint:** [https://arxiv.org/abs/2505.05381](https://arxiv.org/abs/2505.05381)
 
